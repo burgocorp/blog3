@@ -4,6 +4,11 @@ const gravatar = require('gravatar');
 const userModel = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
+const validateRegisterInput = require('../validation/register');
+
+
+
+
 //user register 1.이메일 유무체크 2.아바타 생성 3. usermodel 4.password 암호화 5. response
 
 router.post('/register', (req,res) => {
