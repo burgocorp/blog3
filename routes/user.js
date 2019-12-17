@@ -5,6 +5,7 @@ const userModel = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const validateRegisterInput = require('../validation/register');
+const validateLoginInput = require('../validation/login');
 
 
 
@@ -12,6 +13,11 @@ const validateRegisterInput = require('../validation/register');
 //user register 1.이메일 유무체크 2.아바타 생성 3. usermodel 4.password 암호화 5. response
 
 router.post('/register', (req,res) => {
+
+    const {errors, isValid} = validateRegisterInput(req.body);
+    if (!isValid){
+        return res.status(400).json(errors);
+    }
 
     userModel
         .findOne({email : req.body.email})
@@ -67,6 +73,11 @@ router.post('/register', (req,res) => {
 
 //user login 1.이메일 체크 2. 패스워드 디코딩 3.jwt 4. response
 router.post('/login', (req,res) => {
+
+    const {errors, isValid} = validateLoginInput(req.body);
+    if(!isValid){
+        return res.status(400).json(errors);
+    }
 
     userModel
         .findOne({email : req.body.email})
