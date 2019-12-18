@@ -12,6 +12,7 @@ dotenv.config();
 
 
 const userRoute = require('./routes/user');
+const profileRoute = require('./routes/profile');
 
 
 require('./db');
@@ -29,6 +30,9 @@ require('./config/passport')(passport);
 
 
 app.use('/user', userRoute);
+app.use('/profile', profileRoute);
+
+
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, console.log('server started..'));
