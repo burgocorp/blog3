@@ -104,7 +104,7 @@ router.post('/login', (req,res) => {
 
                             return res.json({
                                 msg : "successfull login",
-                                tokenInfo : 'bearer' + token
+                                tokenInfo : 'bearer ' + token
                             });
                         }else{
                             res.json({
