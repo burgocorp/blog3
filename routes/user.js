@@ -1,6 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const gravatar = require('gravatar');
+const passport = require('passport');
 const userModel = require('../models/user');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
@@ -9,7 +10,9 @@ const validateLoginInput = require('../validation/login');
 
 
 
-
+// @route POST http://localhost:3000/user/register
+// @desc user Register
+// @access Public
 //user register 1.이메일 유무체크 2.아바타 생성 3. usermodel 4.password 암호화 5. response
 
 router.post('/register', (req,res) => {
@@ -71,6 +74,10 @@ router.post('/register', (req,res) => {
 
 });
 
+
+//@route POST http://localhost:3000/user/login
+//@desc user Login
+//@access Public
 //user login 1.이메일 체크 2. 패스워드 디코딩 3.jwt 4. response
 router.post('/login', (req,res) => {
 
@@ -124,8 +131,18 @@ router.post('/login', (req,res) => {
 
 });
 
+
+// @ route GET http://localhost:3000/user/currents
+// @ desc user Currents
+// @ access Private 
 //current user
-router.get('/currents', (req,res) => {
+router.get('/currents', passport.authenticate('jwt', {session : false}) ,(req,res) => {
+
+    res.json({
+        id : req.user.id,
+        name : req.user.name,
+        avatar : req.user.avatar
+    });
 
 });
 
